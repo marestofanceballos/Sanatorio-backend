@@ -3,15 +3,17 @@ import {
   crearTurno,
   obtenerTurnos,
   eliminarTurno,
-  actualizarTurno,
+  obtenerTurnosPorDoctor,
+  obtenerTurnosPorFecha
 } from "../controllers/turnoscontroller.js";
 
 const router = Router();
 
-router.get("/", obtenerTurnos);
 router.post("/", crearTurno);
-router.put("/:id", actualizarTurno);   // 👈 PUT
+router.get("/", obtenerTurnos);
+router.get("/doctor/:doctorId", obtenerTurnosPorDoctor);
 router.delete("/:id", eliminarTurno);
+router.get("/fecha", obtenerTurnosPorFecha);
 
 export default router;
 

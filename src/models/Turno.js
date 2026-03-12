@@ -3,12 +3,16 @@ import mongoose from "mongoose";
 const turnoSchema = new mongoose.Schema(
   {
     doctorId: {
-      type: Number,
+      type: String,
       required: true,
     },
     doctorNombre: {
       type: String,
       required: true,
+    },
+     fecha: {                 // 👈 AGREGAR ESTO
+    type: String,
+    required: true,
     },
     horario: {
       type: String,
@@ -30,10 +34,10 @@ const turnoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    estado: {
+    observacion: {
       type: String,
-      default: "pendiente",
-    },
+      default: "",
+    }
   },
   { timestamps: true }
 );

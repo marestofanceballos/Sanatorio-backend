@@ -1,21 +1,22 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config();
+import doctorAuthRoutes from "./routes/doctorAuthRoutes.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// rutas
+app.use("/api/doctor-auth", doctorAuthRoutes);
+
 app.get("/", (req, res) => {
   res.send("Backend Sanatorio funcionando");
 });
 
-// conexión Mongo
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("🟢 MongoDB conectado"))

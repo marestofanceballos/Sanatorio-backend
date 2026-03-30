@@ -119,3 +119,46 @@ export const obtenerTurnosPorFecha = async (req, res) => {
   }
 
 };
+
+// ✅ CONFIRMAR TURNO
+export const confirmarTurno = async (req, res) => {
+  try {
+
+    const turno = await Turno.findByIdAndUpdate(
+      req.params.id,
+      { estado: "confirmado" },
+      { new: true }
+    );
+
+    res.json(turno);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al confirmar turno"
+    });
+  }
+};
+
+// ❌ RECHAZAR TURNO
+export const rechazarTurno = async (req, res) => {
+  try {
+
+    const { motivo } = req.body;
+
+    const turno = await Turno.findByIdAndUpdate(
+      req.params.id,
+      {
+        estado: "rechazado",
+        motivoRechazo: motivo
+      },
+      { new: true }
+    );
+
+    res.json(turno);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al rechazar turno"
+    });
+  }
+};

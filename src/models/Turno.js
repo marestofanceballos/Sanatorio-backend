@@ -37,7 +37,15 @@ const turnoSchema = new mongoose.Schema(
     observacion: {
       type: String,
       default: "",
-    }
+    },
+    estado: {
+      type: String,
+      default: "pendiente"
+   },
+    motivoRechazo: {
+      type: String,
+      default: ""
+   }
   },
   { timestamps: true }
 );

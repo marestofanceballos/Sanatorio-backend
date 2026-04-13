@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import doctorAuthRoutes from "./routes/doctorAuthRoutes.js";
+import cvsRoutes from "./routes/cvRoutes.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/doctor-auth", doctorAuthRoutes);
+app.use("/api/cvs", cvsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend Sanatorio funcionando");

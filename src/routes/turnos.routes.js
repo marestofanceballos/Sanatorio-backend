@@ -5,8 +5,7 @@ import {
   eliminarTurno,
   obtenerTurnosPorDoctor,
   obtenerTurnosPorFecha,
-  confirmarTurno,
-  rechazarTurno
+  reprogramarTurno,
 } from "../controllers/turnoscontroller.js";
 
 const router = Router();
@@ -16,8 +15,7 @@ router.get("/", obtenerTurnos);
 router.get("/doctor/:doctorId", obtenerTurnosPorDoctor);
 router.delete("/:id", eliminarTurno);
 router.get("/fecha", obtenerTurnosPorFecha);
-router.put("/confirmar/:id", confirmarTurno);
-router.put("/rechazar/:id", rechazarTurno);
+router.put("/reprogramar/:id", reprogramarTurno);
 
 export default router;
 

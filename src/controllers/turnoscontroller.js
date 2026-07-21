@@ -120,45 +120,61 @@ export const obtenerTurnosPorFecha = async (req, res) => {
 
 };
 
-// ✅ CONFIRMAR TURNO
-export const confirmarTurno = async (req, res) => {
+// 🔄 REPROGRAMAR TURNO
+export const reprogramarTurno = async (req, res) => {
+
   try {
 
-    const turno = await Turno.findByIdAndUpdate(
-      req.params.id,
-      { estado: "confirmado" },
-      { new: true }
-    );
+    const { fecha, horario } = req.body;
 
-    res.json(turno);
 
-  } catch (error) {
-    res.status(500).json({
-      message: "Error al confirmar turno"
+    if (!fecha || !horario) {
+      return res.status(400).json({
+        message: "Falta nueva fecha u horario"
+      });
+    }
+
+
+    // evitar que otro paciente tenga ese mismo horario
+    const turnoOcupado = await Turno.findOne({
+      doctorId: req.body.doctorId,
+      fecha,
+      horario,
+      _id: { $ne: req.params.id }
     });
-  }
-};
 
-// ❌ RECHAZAR TURNO
-export const rechazarTurno = async (req, res) => {
-  try {
 
-    const { motivo } = req.body;
+    if (turnoOcupado) {
+      return res.status(400).json({
+        message: "Ese horario ya está ocupado"
+      });
+    }
 
-    const turno = await Turno.findByIdAndUpdate(
+
+    const turnoActualizado = await Turno.findByIdAndUpdate(
       req.params.id,
       {
-        estado: "rechazado",
-        motivoRechazo: motivo
+        fecha,
+        horario
       },
       { new: true }
     );
 
-    res.json(turno);
 
-  } catch (error) {
-    res.status(500).json({
-      message: "Error al rechazar turno"
+    res.json({
+      message: "Turno reprogramado correctamente",
+      turno: turnoActualizado
     });
+
+
+  } catch(error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      message:"Error al reprogramar turno"
+    });
+
   }
+
 };

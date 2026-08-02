@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 // LOGIN
 export const loginDoctor = async (req, res) => {
+  console.log("👉 CORRIENDO VERSION NUEVA DEL LOGIN");
   try {
     const { email, password } = req.body;
 
@@ -19,6 +20,13 @@ export const loginDoctor = async (req, res) => {
       return res.status(400).json({ msg: "Contraseña incorrecta" });
     }
 
+    // 🔵 NUEVO: bloquear login si todavía no está habilitado (pago pendiente)
+    if (!doctor.habilitado) {
+      return res.status(403).json({
+        msg: "Tu cuenta todavía no fue habilitada. Contactate con administración para activar tu suscripción."
+      });
+    }
+
     res.json({
       id: doctor._id,
       nombre: doctor.nombre,
@@ -30,7 +38,7 @@ export const loginDoctor = async (req, res) => {
     res.status(500).json({ msg: "Error en login" });
   }
 };
-
+console.log(process.env.CODIGO_DOCTOR)
 // CREAR DOCTOR
 export const crearDoctor = async (req, res) => {
   try {
@@ -56,11 +64,12 @@ export const crearDoctor = async (req, res) => {
       email,
       password: hashedPassword,
       horarios
+      // habilitado queda en false por default (ver modelo) hasta que lo actives vos
     });
 
     await nuevoDoctor.save();
 
-    res.json({ msg: "Doctor creado correctamente" });
+    res.json({ msg: "Registro exitoso. Tu cuenta va a ser habilitada una vez que confirmemos el pago." });
 
   } catch (error) {
     res.status(500).json({ msg: "Error creando doctor" });

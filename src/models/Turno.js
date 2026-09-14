@@ -48,6 +48,11 @@ const turnoSchema = new mongoose.Schema(
       default: "",
     },
 
+    especialidad: {
+      type: String,
+      default: "",
+    },
+
     // lo dejamos por ahora
     // por si después querés agregar estados
     estado: {

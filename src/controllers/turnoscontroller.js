@@ -11,7 +11,8 @@ export const crearTurno = async (req, res) => {
       pacienteNombre,
       dni,
       email,
-      telefono
+      telefono,
+      especialidad
     } = req.body;
 
     if (!doctorId || !doctorNombre || !fecha || !horario || !pacienteNombre || !dni || !email || !telefono) {
@@ -39,7 +40,8 @@ export const crearTurno = async (req, res) => {
       pacienteNombre,
       dni,
       email,
-      telefono
+      telefono,
+      especialidad
     });
 
     await nuevoTurno.save();

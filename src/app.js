@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import "./config/db.js";
 import turnosRoutes from "./routes/turnos.routes.js";
 import doctorAuthRoutes from "./routes/doctorAuthRoutes.js";
 import cvRoutes from "./routes/cvRoutes.js";

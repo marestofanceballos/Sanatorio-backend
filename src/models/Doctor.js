@@ -18,7 +18,7 @@ const DoctorSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-   horarios: {
+  horarios: {
     type: [String],
     default: []
   },

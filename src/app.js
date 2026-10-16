@@ -1,21 +1,22 @@
 import express from "express";
 import cors from "cors";
+import "./config/db.js";
 import turnosRoutes from "./routes/turnos.routes.js";
 import doctorAuthRoutes from "./routes/doctorAuthRoutes.js";
 import cvRoutes from "./routes/cvRoutes.js";
 import secretariaRoutes from "./routes/secretariaRoutes.js";
+
 const app = express();
 
-
-app.use("/api/secretaria", secretariaRoutes);
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/turnos", turnosRoutes);
 app.use("/api/doctor-auth", doctorAuthRoutes);
 app.use("/api/cvs", cvRoutes);
+app.use("/api/secretaria", secretariaRoutes);
 
-console.log("Rutas registradas: /api/turnos, /api/doctor-auth, /api/cvs"); // ← agregá esto
+console.log("Rutas registradas: /api/turnos, /api/doctor-auth, /api/cvs, /api/secretaria");
 
 // Manejo de errores de Multer
 app.use((err, req, res, next) => {

@@ -33,9 +33,11 @@ const turnoSchema = new mongoose.Schema(
       required: true,
     },
 
+    // opcional: la secretaria puede cargar turnos telefónicos sin email
+    // (el formulario web de pacientes lo sigue exigiendo en crearTurno)
     email: {
       type: String,
-      required: true,
+      default: "",
     },
 
     telefono: {
@@ -44,6 +46,11 @@ const turnoSchema = new mongoose.Schema(
     },
 
     observacion: {
+      type: String,
+      default: "",
+    },
+
+    especialidad: {
       type: String,
       default: "",
     },
@@ -58,6 +65,12 @@ const turnoSchema = new mongoose.Schema(
     motivoRechazo: {
       type: String,
       default: ""
+    },
+
+    // quién cargó el turno: "paciente" (web) o "secretaria"
+    origen: {
+      type: String,
+      default: "paciente"
     }
 
   },

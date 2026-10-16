@@ -10,6 +10,6 @@ process.on("uncaughtException", (err) => {
   console.error("ERROR CAPTURADO:", err.message);
 });
 
-app.listen(PORT, "127.0.0.1", () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log("Servidor corriendo en puerto", PORT);
 });

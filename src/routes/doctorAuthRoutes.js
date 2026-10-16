@@ -2,6 +2,8 @@ import { Router } from "express";
 import { loginDoctor, crearDoctor } from "../controllers/doctorAuthController.js";
 import Doctor from "../models/Doctor.js"; // 👈 importar modelo
 
+console.log("📍 ROUTES FILE CARGADO");  
+
 const router = Router();
 
 router.post("/login", loginDoctor);

@@ -7,6 +7,8 @@ import cors from "cors";
 import doctorAuthRoutes from "./routes/doctorAuthRoutes.js";
 import cvsRoutes from "./routes/cvRoutes.js";
 
+
+
 const app = express();
 
 app.use(cors());
@@ -28,3 +30,6 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
+
+const doctorAuthRoutes = require("./routes/doctorAuth");
+app.use("/api/doctor-auth", doctorAuthRoutes);

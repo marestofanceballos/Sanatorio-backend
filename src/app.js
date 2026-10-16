@@ -3,9 +3,11 @@ import cors from "cors";
 import turnosRoutes from "./routes/turnos.routes.js";
 import doctorAuthRoutes from "./routes/doctorAuthRoutes.js";
 import cvRoutes from "./routes/cvRoutes.js";
-
+import secretariaRoutes from "./routes/secretariaRoutes.js";
 const app = express();
 
+
+app.use("/api/secretaria", secretariaRoutes);
 app.use(cors());
 app.use(express.json());
 

@@ -4,6 +4,8 @@ import {
   crearSecretaria,
   asignarDoctores,
   getDoctoresSecretaria,
+  crearDoctorSecretaria,
+  modificarDoctorSecretaria,
   getTurnosSecretaria,
   crearTurnoSecretaria,
   reprogramarTurnoSecretaria,
@@ -16,6 +18,8 @@ router.post("/login", loginSecretaria);
 router.post("/crear", crearSecretaria);
 router.get("/:secretariaId/doctores", getDoctoresSecretaria);
 router.put("/:secretariaId/doctores", asignarDoctores);
+router.post("/:secretariaId/doctores", crearDoctorSecretaria);
+router.put("/:secretariaId/doctores/:doctorId", modificarDoctorSecretaria);
 router.get("/:secretariaId/turnos", getTurnosSecretaria);
 router.post("/:secretariaId/turnos", crearTurnoSecretaria);
 router.put("/:secretariaId/turnos/:turnoId", reprogramarTurnoSecretaria);

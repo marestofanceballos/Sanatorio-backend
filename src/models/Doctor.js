@@ -33,8 +33,7 @@ const DoctorSchema = new mongoose.Schema({
     default: false
   },
   // 🔵 NUEVO: control de acceso por pago.
-  // Por defecto false -> el doctor se registra pero no puede loguearse
-  // hasta que lo habilites a mano en MongoDB (Compass/Atlas, campo "habilitado" -> true)
+  // ...
   habilitado: {
     type: Boolean,
     default: false

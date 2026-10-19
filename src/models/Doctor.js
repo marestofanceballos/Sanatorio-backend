@@ -22,6 +22,18 @@ const DoctorSchema = new mongoose.Schema({
     type: [String],
     default: []
   },
+  // días que atiende: 0 = domingo ... 6 = sábado (vacío = todos los días)
+  diasAtencion: {
+    type: [Number],
+    default: []
+  },
+  // true = atiende por orden de llegada, sin horarios fijos
+  sinTurno: {
+    type: Boolean,
+    default: false
+  },
+  // 🔵 NUEVO: control de acceso por pago.
+  // ...
   habilitado: {
     type: Boolean,
     default: false

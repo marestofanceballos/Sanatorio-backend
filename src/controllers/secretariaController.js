@@ -444,3 +444,45 @@ export const modificarDoctorSecretaria = async (req, res) => {
     res.status(500).json({ mensaje: "Error del servidor" });
   }
 };
+
+// Fecha de hoy (YYYY-MM-DD) en Argentina, para separar turnos próximos de pasados
+const hoyArgentina = () =>
+  new Date().toLocaleDateString("en-CA", { timeZone: "America/Argentina/Buenos_Aires" });
+
+// DELETE /api/secretaria/:secretariaId/doctores/:doctorId  (la secretaria elimina uno de sus doctores)
+// Se quita de su lista y se cancelan los turnos próximos; los turnos pasados quedan como historial.
+// El doctor se borra de la base solo si no es una cuenta habilitada y ninguna otra secretaria lo maneja.
+export const eliminarDoctorSecretaria = async (req, res) => {
+  try {
+    const { secretariaId, doctorId } = req.params;
+
+    const secretaria = await verificarSecretaria(secretariaId, doctorId);
+    if (!secretaria) {
+      return res.status(403).json({ mensaje: "No tenés acceso a este doctor" });
+    }
+
+    secretaria.doctores = secretaria.doctores.filter((id) => id !== doctorId);
+    await secretaria.save();
+
+    const { deletedCount: turnosCancelados } = await Turno.deleteMany({
+      doctorId,
+      fecha: { $gte: hoyArgentina() },
+    });
+
+    const doctor = await Doctor.findById(doctorId);
+    const otraSecretaria = await Secretaria.findOne({ doctores: doctorId });
+    const borrado = Boolean(doctor && !doctor.habilitado && !otraSecretaria);
+    if (borrado) {
+      await doctor.deleteOne();
+    }
+
+    res.json({
+      mensaje: borrado ? "Doctor eliminado" : "Doctor quitado de tu lista",
+      doctorBorrado: borrado,
+      turnosCancelados,
+    });
+  } catch (error) {
+    console.error("Error eliminando doctor (secretaria):", error);
+    res.status(500).json({ mensaje: "Error del servidor" });
+  }
+};

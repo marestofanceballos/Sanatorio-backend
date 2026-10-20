@@ -50,6 +50,12 @@ const turnoSchema = new mongoose.Schema(
       default: "",
     },
 
+    // obra social / prepaga del paciente (opcional; vacío = particular o no informada)
+    obraSocial: {
+      type: String,
+      default: "",
+    },
+
     especialidad: {
       type: String,
       default: "",

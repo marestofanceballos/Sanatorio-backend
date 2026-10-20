@@ -89,6 +89,7 @@ export const crearTurnoSecretaria = async (req, res) => {
       telefono,
       email = "",
       observacion = "",
+      obraSocial = "",
     } = req.body;
 
     if (!doctorId || !doctorNombre || !fecha || !horario || !pacienteNombre || !dni || !telefono) {
@@ -128,6 +129,7 @@ export const crearTurnoSecretaria = async (req, res) => {
       telefono: telefono.trim(),
       email: email.trim(),
       observacion: observacion.trim(),
+      obraSocial: obraSocial.trim(),
       estado: "confirmado",
       origen: "secretaria",
     });

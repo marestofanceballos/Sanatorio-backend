@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 // LOGIN
 export const loginDoctor = async (req, res) => {
-  console.log("👉 CORRIENDO VERSION NUEVA DEL LOGIN");
   try {
     const { email, password } = req.body;
 
@@ -38,7 +37,6 @@ export const loginDoctor = async (req, res) => {
     res.status(500).json({ msg: "Error en login" });
   }
 };
-console.log(process.env.CODIGO_DOCTOR)
 // CREAR DOCTOR
 export const crearDoctor = async (req, res) => {
   try {

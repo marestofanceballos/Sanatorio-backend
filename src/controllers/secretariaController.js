@@ -5,8 +5,6 @@ import Secretaria from "../models/Secretaria.js";
 import Turno from "../models/Turno.js";
 import Doctor from "../models/Doctor.js";
 
-const MAX_DOCTORES = 3;
-
 // Verifica que la secretaria exista, esté habilitada y (si se pasa) que maneje ese doctor
 const verificarSecretaria = async (secretariaId, doctorId = null) => {
   if (!mongoose.Types.ObjectId.isValid(secretariaId)) return null;
@@ -315,7 +313,6 @@ export const asignarDoctores = async (req, res) => {
 // Devuelve un mensaje de error si la lista de doctores no es válida, o null si está bien
 const validarDoctores = async (doctores) => {
   if (!Array.isArray(doctores)) return "doctores tiene que ser una lista de IDs";
-  if (doctores.length > MAX_DOCTORES) return `Máximo ${MAX_DOCTORES} doctores por secretaria`;
   if (doctores.some((id) => !mongoose.Types.ObjectId.isValid(id))) return "Hay un ID de doctor inválido";
 
   const encontrados = await Doctor.countDocuments({ _id: { $in: doctores } });
@@ -377,9 +374,6 @@ export const crearDoctorSecretaria = async (req, res) => {
     const secretaria = await verificarSecretaria(req.params.secretariaId);
     if (!secretaria) {
       return res.status(403).json({ mensaje: "Secretaria no válida" });
-    }
-    if (secretaria.doctores.length >= MAX_DOCTORES) {
-      return res.status(400).json({ mensaje: `Ya manejás ${MAX_DOCTORES} doctores, que es el máximo` });
     }
 
     const { error, datos } = datosDoctor(req.body, { nuevo: true });
